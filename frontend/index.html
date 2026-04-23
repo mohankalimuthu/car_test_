@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Test Platform - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>MCQ Test Platform</h1>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')">Login</button>
+            <button class="tab" onclick="switchTab('register')">Register</button>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-section active">
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div class="admin-link" onclick="switchTab('admin')">Admin Login</div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="form-section">
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="reg-firstname" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="reg-lastname" required>
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="reg-dob" required>
+                </div>
+                <div class="form-group">
+                    <label>Internship Domain</label>
+                    <input type="text" id="reg-domain" placeholder="e.g., Web Development" required>
+                </div>
+                <div class="form-group">
+                    <label>Internship Role</label>
+                    <input type="text" id="reg-role" placeholder="e.g., Frontend Developer" required>
+                </div>
+                <div class="form-group">
+                    <label>Favorite Unique Name</label>
+                    <input type="text" id="reg-favorite" placeholder="Your favorite thing" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="reg-email" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div id="admin-form" class="form-section">
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input type="email" id="admin-email" value="admin@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Admin Password</label>
+                    <input type="password" id="admin-password" required>
+                </div>
+                <button type="submit">Admin Login</button>
+            </form>
+            <div class="admin-link" onclick="switchTab('login')">Back to User Login</div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

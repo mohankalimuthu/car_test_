@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('users')">User Management</button>
+            <button class="tab" onclick="switchTab('aptitude')">Aptitude Questions</button>
+            <button class="tab" onclick="switchTab('technical')">Technical Questions</button>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <!-- Users Tab -->
+        <div id="users-tab" class="tab-content active">
+            <h2>Registered Users</h2>
+            <table id="users-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Domain</th>
+                        <th>Role</th>
+                        <th>Aptitude Score</th>
+                        <th>Technical Score</th>
+                        <th>Total Score</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="users-tbody">
+                    <!-- Users will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Aptitude Questions Tab -->
+        <div id="aptitude-tab" class="tab-content">
+            <h2>Aptitude Questions</h2>
+            <button class="btn btn-success" onclick="openAddQuestionModal('aptitude')">+ Add Question</button>
+
+            <table id="aptitude-table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Options</th>
+                        <th>Correct Answer</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="aptitude-tbody">
+                    <!-- Questions will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Technical Questions Tab -->
+        <div id="technical-tab" class="tab-content">
+            <h2>Technical Questions</h2>
+            <button class="btn btn-success" onclick="openAddQuestionModal('technical')">+ Add Question</button>
+
+            <table id="technical-table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Options</th>
+                        <th>Correct Answer</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="technical-tbody">
+                    <!-- Questions will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Question Modal -->
+    <div id="question-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Add Question</h2>
+            <form id="question-form" onsubmit="handleQuestionSubmit(event)">
+                <input type="hidden" id="question-id">
+                <input type="hidden" id="question-type">
+
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <textarea id="question-text" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Option 1</label>
+                    <input type="text" id="option-0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Option 2</label>
+                    <input type="text" id="option-1" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Option 3</label>
+                    <input type="text" id="option-2" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Option 4</label>
+                    <input type="text" id="option-3" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Correct Answer</label>
+                    <select id="correct-answer" required>
+                        <option value="0">Option 1</option>
+                        <option value="1">Option 2</option>
+                        <option value="2">Option 3</option>
+                        <option value="3">Option 4</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">Save Question</button>
+                <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

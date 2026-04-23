@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Test</title>
+    <link rel="stylesheet" href="test-styles.css">
+</head>
+<body>
+    <!-- Instructions Overlay -->
+    <div id="instructions-overlay" class="instructions-overlay">
+        <div class="instructions-box">
+            <h2>📋 Test Instructions</h2>
+            <ul>
+                <li>This test consists of two sections: <strong>Aptitude</strong> and <strong>Technical</strong></li>
+                <li>You will start with the Aptitude section first</li>
+                <li>Each question has <strong>1 minute</strong> time limit</li>
+                <li>After time expires, you will automatically move to the next question</li>
+                <li>You can navigate between questions using Next/Previous buttons</li>
+                <li>You can also jump to any question using the navigator panel on the right</li>
+                <li>Once you complete all aptitude questions or time runs out, you will automatically move to the Technical section</li>
+                <li>Your camera will be active during the test (for monitoring purposes)</li>
+                <li>Do not refresh or close the browser during the test</li>
+                <li><strong>Important:</strong> You can only take this test once. After submission, you cannot retake it.</li>
+            </ul>
+            <div class="accept-container">
+                <label>
+                    <input type="checkbox" id="accept-checkbox">
+                    I have read and understood all the instructions
+                </label>
+            </div>
+            <button class="start-btn" id="start-btn" disabled>Start Test</button>
+        </div>
+    </div>
+
+    <!-- Main Test Interface -->
+    <div id="test-interface" class="hidden">
+        <!-- Header -->
+        <div class="header">
+            <h1>MCQ Test Platform</h1>
+            <div class="timer" id="timer">01:00</div>
+        </div>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Question Panel -->
+            <div class="question-panel">
+                <div class="section-info" id="section-info">
+                    Aptitude Section
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number" id="question-number">Question 1</div>
+                    <div class="question-text" id="question-text">Loading question...</div>
+
+                    <div class="options" id="options-container">
+                        <!-- Options will be dynamically loaded -->
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()">Previous</button>
+                        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">Next</button>
+                        <button class="nav-btn submit-btn hidden" id="submit-btn" onclick="submitTest()">Submit Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigator Panel -->
+            <div class="navigator-panel">
+                <h3>Question Navigator</h3>
+                <div class="question-grid" id="question-grid">
+                    <!-- Question navigation buttons will be dynamically loaded -->
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ecf0f1;"></div>
+                        <span>Not Visited</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2ecc71;"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f39c12;"></div>
+                        <span>Skipped</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Camera Preview -->
+        <div class="camera-preview">
+            <div class="camera-label">Camera Active</div>
+            <video id="camera-video" autoplay></video>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="test.js"></script>
+</body>
+</html>
