@@ -1,8 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import Annotated
-from pydantic import StringConstraints
+from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
@@ -12,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI(title="MCQ Test Platform API")
-EmailStr = Annotated[str, StringConstraints(pattern=r".+@.+\..+")]
+
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
@@ -175,7 +173,7 @@ async def admin_login(credentials: AdminLogin):
 @app.post("/api/admin/questions")
 async def add_question(question: Question):
     """Add a new question"""
-    question_doc = question.dict()
+    question_doc = question.model_dump()
     question_doc["created_at"] = datetime.utcnow()
 
     result = await questions_collection.insert_one(question_doc)
@@ -199,7 +197,7 @@ async def update_question(question_id: str, question_update: QuestionUpdate):
     """Update a question"""
     from bson import ObjectId
 
-    update_data = {k: v for k, v in question_update.dict().items() if v is not None}
+    update_data = {k: v for k, v in question_update.model_dump(exclude_unset=True).items() if v is not None}
 
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields to update")
