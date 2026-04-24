@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
+from typing import Annotated
+from pydantic import StringConstraints
 from typing import List, Optional
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
@@ -10,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI(title="MCQ Test Platform API")
-
+EmailStr = Annotated[str, StringConstraints(pattern=r".+@.+\..+")]
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
