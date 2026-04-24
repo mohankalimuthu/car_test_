@@ -21,9 +21,9 @@ app.add_middleware(
 )
 
 # MongoDB Configuration
-MONGO_URL = os.getenv("MONGO_URL")
-admin_email_ = os.getenv("email")
-pass_email = os.getenv("email_pass")
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+admin_email_ = os.getenv("email", "admin@example.com")
+pass_email = os.getenv("email_pass", "admin123")
 client = AsyncIOMotorClient(MONGO_URL)
 DATABASE_NAME = "mcq_platform"
 
@@ -173,8 +173,13 @@ async def admin_login(credentials: AdminLogin):
 @app.post("/api/admin/questions")
 async def add_question(question: Question):
     """Add a new question"""
-    question_doc = question.model_dump()
-    question_doc["created_at"] = datetime.utcnow()
+    question_doc = {
+        "question": question.question,
+        "options": question.options,
+        "answer": question.answer,
+        "type": question.type,
+        "created_at": datetime.utcnow()
+    }
 
     result = await questions_collection.insert_one(question_doc)
 
@@ -197,7 +202,15 @@ async def update_question(question_id: str, question_update: QuestionUpdate):
     """Update a question"""
     from bson import ObjectId
 
-    update_data = {k: v for k, v in question_update.model_dump(exclude_unset=True).items() if v is not None}
+    update_data = {}
+    if question_update.question is not None:
+        update_data["question"] = question_update.question
+    if question_update.options is not None:
+        update_data["options"] = question_update.options
+    if question_update.answer is not None:
+        update_data["answer"] = question_update.answer
+    if question_update.type is not None:
+        update_data["type"] = question_update.type
 
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields to update")
@@ -340,11 +353,16 @@ async def root():
     return {
         "message": "MCQ Test Platform API",
         "docs": "/docs",
-        "frontend": "Open index.html in your browser"
+        "version": "1.0"
     }
+
+
+@app.get("/health")
+async def health():
+    """Health check endpoint"""
+    return {"status": "healthy"}
 
 
 if __name__ == "__main__":
     import uvicorn
-
     uvicorn.run(app, host="0.0.0.0", port=8000)
