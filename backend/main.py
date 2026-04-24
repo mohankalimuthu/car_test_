@@ -25,9 +25,9 @@ app.add_middleware(
 )
 
 # MongoDB
-MONGO_URL = os.environ["MONGO_URL"]
-admin_email_ = os.environ["email"]
-pass_email = os.environ["email_pass"]
+MONGO_URL = os.getenv["MONGO_URL"]
+admin_email_ = os.getenv["email"]
+pass_email = os.getenv["email_pass"]
 
 client = AsyncIOMotorClient(MONGO_URL)
 db = client["mcq_platform"]
